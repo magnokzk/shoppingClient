@@ -4,7 +4,13 @@
 
 <template>
   <v-app>
-      <v-app-bar title="ShoppingList" v-if="showToolbar"></v-app-bar>
+      <v-app-bar title="ShoppingList" v-if="showToolbar">
+        <v-btn
+          icon="mdi-logout"
+          color="black"
+          v-on:click="logout"
+        />
+      </v-app-bar>
       <v-main>
         <v-container class="pa-4">
           <RouterView />
@@ -29,7 +35,10 @@
       }
     },
     methods: {
-      
+      logout() {
+        localStorage.removeItem('token')
+        this.$router.push('/login')
+      }
     }
   }
 </script>

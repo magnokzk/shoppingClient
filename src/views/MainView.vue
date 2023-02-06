@@ -1,15 +1,40 @@
 <script setup lang="ts">
-  import TheWelcome from '../components/TheWelcome.vue'
+  import MyItems from '../components/MyItems.vue'
 </script>
 
 <template>
-      <TheWelcome/>
+      <v-card>
+      </v-card>
+      <v-card>
+        <v-tabs
+          v-model="tab"
+          bg-color="primary"
+          align-tabs="center"
+        >
+          <v-tab value="one">Minhas listas</v-tab>
+          <v-tab value="two">Inscrições</v-tab>
+        </v-tabs>
+
+        <v-card-text>
+          <v-window v-model="tab">
+            <v-window-item value="one">
+              <MyItems/>
+            </v-window-item>
+
+            <v-window-item value="two">
+              Two
+            </v-window-item>
+          </v-window>
+        </v-card-text>
+      </v-card>
 </template>
 
 <script lang="ts">
   export default{
     data(){
-
+      return {
+        tab: null
+      }
     }
   }
 </script>

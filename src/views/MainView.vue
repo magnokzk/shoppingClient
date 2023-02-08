@@ -8,7 +8,7 @@
       <v-card>
         <v-tabs
           v-model="tab"
-          bg-color="primary"
+          bg-color="blue"
           align-tabs="center"
         >
           <v-tab value="one">Minhas listas</v-tab>

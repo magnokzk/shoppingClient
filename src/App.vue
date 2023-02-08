@@ -4,18 +4,20 @@
 
 <template>
   <v-app>
-      <v-app-bar title="ShoppingList" v-if="showToolbar">
-        <v-btn
-          icon="mdi-logout"
-          color="black"
-          v-on:click="logout"
-        />
-      </v-app-bar>
-      <v-main>
-        <v-container class="pa-4">
-          <RouterView />
-        </v-container>
-      </v-main>
+    <v-app-bar title="ShoppingList" color="blue" v-if="showToolbar">
+      <v-btn
+        prepend-icon="mdi-logout"
+        color="white"
+        v-on:click="logout"
+      >
+      Logout
+      </v-btn>
+    </v-app-bar>
+    <v-main>
+      <v-container class="pa-4">
+        <RouterView />
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 

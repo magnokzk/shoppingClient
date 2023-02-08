@@ -5,7 +5,7 @@
 </script>
 
 <template>
-  <v-container v-if="lists.length > 0">
+  <v-container :max-width="setWidth">
     <v-row no-gutters>
       <v-col
         class="pa-2"
@@ -22,9 +22,9 @@
         </v-card>
       </v-col>
       <v-col
-        v-for="item, index in lists" 
+        v-for="item in visibleLists" 
         class="pa-2"
-        :key="index"
+        :key="item.id"
         cols="12"
         sm="12"
         md="6"
@@ -38,25 +38,27 @@
       </v-col>
     </v-row>
 
+    <v-pagination
+      v-if="lists.length > 0 "
+      v-model="pagination.page"
+      :length="paginationLength"
+      :total-visible="pagination.totalVisible"
+    />
+
     <ListItemVisualization 
       v-bind:open-dialog="openDialog" 
       v-bind:list-details="dialogList"
       v-bind:list-items="dialogItems"
+      @update-list="fetchData()"
       @closeModal="handleCloseDialog()"
     />
 
     <CreateList
       v-bind:open-dialog="openListCreation"
-      @closeModal="handleOpenListCreation()"
+      @update-list="fetchData()"
+      @close-modal="handleOpenListCreation()"
     />
 
-
-  </v-container>
-
-  <v-container v-else>
-    <v-card class="pa-3">
-      <h1>Nenhuma lista encontrada</h1>
-    </v-card>
   </v-container>
 </template>
 
@@ -66,25 +68,44 @@
   export default {
     data(){
       return {
-        lists: [] as any[],
+        lists: [] as List[],
         dialogList: {},
         dialogItems: [],
         openDialog: false,
-        openListCreation: false
+        openListCreation: false,
+        pagination: {
+          length: 2,
+          page: 1,
+          totalVisible: 5,
+          perPage: 14
+        }
       }
     },
     async beforeMount() {
-      await api.get('/list')
-        .then((res) => {
-          this.lists = res.data
-        })
-        .catch(console.log)
+      await this.fetchData()
     },
     components: {
         ListItemVisualization,
         CreateList
     },
     methods: {
+      logMessage() {
+        alert('ae caralho')
+      },
+      async fetchData() {
+        console.log('caiu aqui')
+        await api.get('/list',
+          {
+            headers: {
+              Authorization: localStorage.getItem('token')
+            }
+          }
+        )
+        .then((res) => {
+          this.lists = res.data
+        })
+        .catch(console.log)
+      },
       handleOpenDialog(item:any) {
         this.openDialog = true,
         this.dialogList = item
@@ -108,6 +129,27 @@
         return (_.countBy(item, (val) => {
           return !(val.checked)
         })).true
+      }
+    },
+    computed: {
+      visibleLists () {
+        return this.lists.slice((this.pagination.page - 1)* this.pagination.perPage, this.pagination.page* this.pagination.perPage)
+      },
+      paginationLength() {
+        return Math.ceil(this.lists.length / this.pagination.perPage)
+      },
+      setWidth():string {
+        if(this.$vuetify.display.xxl) {
+            return '45%'
+        }
+        if(this.$vuetify.display.md) {
+            return '85%'
+        }
+        if(this.$vuetify.display.mobile) {
+            return '100%'
+        }
+        return '60%'
+
       }
     }
   }

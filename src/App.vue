@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { RouterView } from 'vue-router'
+  import _ from 'underscore'
 </script>
 
 <template>
@@ -33,7 +34,7 @@
     },
     computed: {
       showToolbar() {
-        return this.$router.currentRoute.value.path !== '/login'
+        return !(_.contains(['/login', '/register'], this.$router.currentRoute.value.path))
       }
     },
     methods: {

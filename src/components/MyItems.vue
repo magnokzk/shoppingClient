@@ -93,7 +93,6 @@
         alert('ae caralho')
       },
       async fetchData() {
-        console.log('caiu aqui')
         await api.get('/list',
           {
             headers: {
@@ -149,7 +148,6 @@
             return '100%'
         }
         return '60%'
-
       }
     }
   }

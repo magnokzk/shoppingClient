@@ -4,8 +4,6 @@
 
 <template>
       <v-card>
-      </v-card>
-      <v-card>
         <v-tabs
           v-model="tab"
           bg-color="blue"

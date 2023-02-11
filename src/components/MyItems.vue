@@ -32,7 +32,9 @@
       >
         <v-card class="pa-3" @click.stop="handleOpenDialog(item)">
           <h2>{{ item.title }}</h2>
-          <h4>{{ item.description }}</h4>
+          <h4 class="text-truncate" width="100%">
+            {{ item.description }}
+          </h4>
           <p>Criada por: {{ item.user.firstName }} {{ item.user.lastName }}</p>
         </v-card>
       </v-col>

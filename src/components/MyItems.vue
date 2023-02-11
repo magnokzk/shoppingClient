@@ -89,9 +89,6 @@
         CreateList
     },
     methods: {
-      logMessage() {
-        alert('ae caralho')
-      },
       async fetchData() {
         await api.get('/list',
           {

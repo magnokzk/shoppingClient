@@ -4,7 +4,7 @@
 </script>
 
 <template>
-    <v-expansion-panels class="mb-1" variant="popout">
+    <v-expansion-panels class="mb-1">
         <v-expansion-panel
             v-if="getListItems.length > 0"
             v-for="item in getListItems"

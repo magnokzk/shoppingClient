@@ -22,7 +22,7 @@
                     <v-window-item value="one">
                         <v-text-field label="Título" v-model="listInputTitle" :disabled="!isListEmpty"/>
                         <v-textarea label="Descrição" v-model="listInputDescription" :disabled="!isListEmpty"/>
-                        <v-btn class="mb-2" color="green" @click="createList" v-if="isListEmpty" prepend-icon="mdi-content-save">Criar</v-btn>
+                        <v-btn class="mb-2" color="green" @click="createList" :disabled="isCreationDisabled" v-if="isListEmpty" prepend-icon="mdi-content-save">Criar</v-btn>
                     </v-window-item>
 
                     <v-window-item value="two">
@@ -81,11 +81,6 @@
             api.post('/list/create', {
                 title: this.listInputTitle,
                 description: this.listInputDescription
-            },
-            {
-                headers: {
-                    Authorization: localStorage.getItem('token')
-                }
             })
             .then((res:any) => {
                 this.createdList = res.data
@@ -98,11 +93,6 @@
                 list_id: this.createdList.id,
                 name: this.itemInputName,
                 description: this.itemInputDescription
-            },
-            {
-                headers: {
-                    Authorization: localStorage.getItem('token')
-                }
             })
             .then((res:any) => {
                 this.itemList.push(res.data)
@@ -137,6 +127,9 @@
         },
         isInsertDisabled() {
             return (this.itemInputName == '' || this.itemInputDescription == '')
+        },
+        isCreationDisabled() {
+            return (this.listInputTitle == '' || this.listInputDescription == '')
         },
         setWidth():string {
             if(this.$vuetify.display.xxl) {

@@ -14,7 +14,7 @@
         md="6"
         xl="4"
       >
-        <v-card height="84px" class="d-flex justify-center align-center" variant="outlined" @click="handleOpenListCreation()">
+        <v-card height="84px" class="d-flex justify-center align-center rounded-ts-xl" variant="outlined" @click="handleOpenListCreation()">
           <v-icon
             icon="mdi-plus-circle"
             size="x-large"
@@ -30,7 +30,7 @@
         md="6"
         xl="4"
       >
-        <v-card class="pa-3" @click.stop="handleOpenDialog(item)">
+        <v-card class="pa-3 rounded-ts-xl bg-blue" @click.stop="handleOpenDialog(item)">
           <h2>{{ item.title }}</h2>
           <h4 class="text-truncate" width="100%">
             {{ item.description }}
@@ -92,13 +92,7 @@
     },
     methods: {
       async fetchData() {
-        await api.get('/list',
-          {
-            headers: {
-              Authorization: localStorage.getItem('token')
-            }
-          }
-        )
+        await api.get('/list')
         .then((res) => {
           this.lists = res.data
         })

@@ -11,10 +11,27 @@
             </v-card-title>
 
             <v-card-text>
-                <ItemExpansionPanels
-                    v-bind:list-items="getListItems"
-                    @update-list="updateList()"
-                />
+                <v-card>
+                    <v-card-title width="100%">
+                        Descrição 
+                    </v-card-title>
+
+                    <v-card-text class="text-justify">
+                        {{ getListDetails.description }}
+                    </v-card-text>
+                </v-card>
+            </v-card-text>
+
+            <v-card-text>
+                <v-card>
+                    <v-card-title>Itens</v-card-title>
+                    <v-card-text>
+                        <ItemExpansionPanels
+                            v-bind:list-items="getListItems"
+                            @update-list="updateList()"
+                        />
+                    </v-card-text>
+                </v-card>
             </v-card-text>
 
             <v-card-actions class="justify-end">
@@ -69,9 +86,6 @@
             },
             handleListDelete() {
                 api.delete('/list', {
-                    headers: {
-                        Authorization: localStorage.getItem('token')
-                    },
                     data: this.getListDetails
                 }).then(() => {
                     this.snackBar = {

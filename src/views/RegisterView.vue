@@ -103,7 +103,6 @@
                 }).catch((err) => {
                     console.log('error: ', err)
                 })
-                console.log(this.email, this.password)
             },
             redirectTo(routeName:string) {
                 this.$router.push({name: routeName})

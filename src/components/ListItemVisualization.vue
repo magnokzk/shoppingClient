@@ -1,6 +1,7 @@
 <script setup lang="ts">
     import { api } from '../api/axios'
     import ItemExpansionPanels from './ItemExpansionPanels.vue';
+    import CreateShareLink from './CreateSharelink.vue'
 </script>
 
 <template>
@@ -35,11 +36,18 @@
             </v-card-text>
 
             <v-card-actions class="justify-end">
-                <v-btn color="red" @click.stop="handleListDelete" prepend-icon="mdi-delete">Deletar</v-btn>
+                <v-btn color="red" @click.stop="handleListDelete" v-if="getType === 1" prepend-icon="mdi-delete">Deletar</v-btn>
+                <v-btn color="black" @click.stop="handleOpenShareDialog()" v-if="getType === 1" prepend-icon="mdi-share">Compartilhar</v-btn>
                 <v-btn color="black" @click.stop="showDialog=false" prepend-icon="mdi-check">Fechar</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
+
+    <CreateShareLink
+        v-bind:open-dialog="openShareDialog"
+        v-bind:list="listIdShare"
+        @closeModal="handleCloseShareDialog()"
+    />
 
     <v-snackbar
       v-model="snackBar.open"
@@ -65,6 +73,8 @@
     export default {
         data() {
             return {
+                openShareDialog: false,
+                listIdShare: -1 as number,
                 snackBar: {
                     open: false,
                     message: '',
@@ -75,14 +85,24 @@
         props: {
             openDialog: Boolean,
             listDetails: Object,
-            listItems: Array
+            listItems: Array,
+            type: Number
         },
         components: {
-            ItemExpansionPanels
+            ItemExpansionPanels,
+            CreateShareLink
         },
         methods: {
             updateList() {
                 this.$emit('update-list')
+            },
+            handleOpenShareDialog() {
+                this.listIdShare = this.getListDetails.id
+                this.openShareDialog = true
+            },
+            handleCloseShareDialog() {
+                this.listIdShare = -1
+                this.openShareDialog = false
             },
             handleListDelete() {
                 api.delete('/list', {
@@ -121,6 +141,9 @@
             },
             getListItems(): any {
                 return this.listItems;
+            },
+            getType() {
+                return this.type
             },
             setWidth():string {
                 if(this.$vuetify.display.xxl) {

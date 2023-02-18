@@ -63,6 +63,7 @@
 
 <script lang="ts">
     import { api } from '../api/axios'
+    import _ from 'underscore'
 
     export default {
         data() {
@@ -76,7 +77,7 @@
                 await api.post('/login', {
                     email: this.email,
                     password: this.password
-                }).then((res) => {
+                }).then(async (res) => {
                     localStorage.setItem('token', res.data?.token)
                     this.redirectTo('home')
                 }).catch((err) => {

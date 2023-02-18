@@ -8,6 +8,7 @@
   <v-container :max-width="setWidth">
     <v-row no-gutters>
       <v-col
+        v-if="getType === 1"
         class="pa-2"
         cols="12"
         sm="12"
@@ -51,6 +52,7 @@
       v-bind:open-dialog="openDialog" 
       v-bind:list-details="dialogList"
       v-bind:list-items="dialogItems"
+      v-bind:type="getType"
       @update-list="fetchData()"
       @closeModal="handleCloseDialog()"
     />
@@ -90,9 +92,12 @@
         ListItemVisualization,
         CreateList
     },
+    props: {
+      type: Number
+    },
     methods: {
       async fetchData() {
-        await api.get('/list')
+        await api.get((this.type === 1? '/list': '/list/shared'))
         .then((res) => {
           this.lists = res.data
         })
@@ -129,6 +134,9 @@
       },
       paginationLength() {
         return Math.ceil(this.lists.length / this.pagination.perPage)
+      },
+      getType() {
+        return this.type
       },
       setWidth():string {
         if(this.$vuetify.display.xxl) {

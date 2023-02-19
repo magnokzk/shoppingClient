@@ -78,6 +78,7 @@
                     email: this.email,
                     password: this.password
                 }).then(async (res) => {
+                    api.defaults.headers.Authorization = res.data?.token
                     localStorage.setItem('token', res.data?.token)
                     this.redirectTo('home')
                 }).catch((err) => {

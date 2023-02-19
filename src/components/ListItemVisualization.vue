@@ -36,9 +36,9 @@
             </v-card-text>
 
             <v-card-actions class="justify-end">
-                <v-btn color="red" @click.stop="handleListDelete" v-if="getType === 1" prepend-icon="mdi-delete">Deletar</v-btn>
-                <v-btn color="black" @click.stop="handleOpenShareDialog()" v-if="getType === 1" prepend-icon="mdi-share">Compartilhar</v-btn>
-                <v-btn color="black" @click.stop="showDialog=false" prepend-icon="mdi-check">Fechar</v-btn>
+                <v-btn color="red" @click.stop="handleListDelete" v-if="getType === 1"> <v-icon icon="mdi-delete"/> </v-btn>
+                <v-btn color="black" @click.stop="handleOpenShareDialog()" v-if="getType === 1"> <v-icon icon="mdi-share"/> </v-btn>
+                <v-btn color="black" @click.stop="showDialog=false"> <v-icon icon="mdi-check"/> </v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

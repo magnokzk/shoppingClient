@@ -32,7 +32,7 @@
         xl="4"
       >
         <v-card class="pa-3 rounded-ts-xl bg-blue" @click.stop="handleOpenDialog(item)">
-          <h2>{{ item.title }}</h2>
+          <h2 class="text-truncate">{{ item.title }}</h2>
           <h4 class="text-truncate" width="100%">
             {{ item.description }}
           </h4>

@@ -80,7 +80,7 @@
                 }).then(async (res) => {
                     api.defaults.headers.Authorization = res.data?.token
                     localStorage.setItem('token', res.data?.token)
-                    this.redirectTo('home')
+                    this.$router.push({name: 'home', query: this.$route.query})
                 }).catch((err) => {
                     console.log('error: ', err)
                 })

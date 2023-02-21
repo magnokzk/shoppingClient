@@ -25,7 +25,7 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach(async (to, from)=> {
+router.beforeEach(async (from, to)=> {
   const token = localStorage.getItem('token')
 
   const isTokenValid = async () => {
@@ -38,12 +38,12 @@ router.beforeEach(async (to, from)=> {
     return true
   }
 
-  if(!(await isTokenValid()) && !(_.contains(['login', 'register'], to.name))){
-    return {name: 'login'}
+  if(!(await isTokenValid()) && !(_.contains(['login', 'register'], from.name))){
+    return {name: 'login', query: from.query}
   }
 
   // TODO: rewrite this part in an acceptable way
-  if((await isTokenValid()) && _.contains(['login', 'register'], to.name)){
+  if((await isTokenValid()) && _.contains(['login', 'register'], from.name)){
     return {name: 'home'}
   }
 })
